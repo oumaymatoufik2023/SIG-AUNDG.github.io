@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>GEOPORTAIL AUNDG</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Load Leaflet -->
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+ 
+     <!-- Load Proj4js for coordinate transformations -->
+     <script src="https://unpkg.com/proj4/dist/proj4.js"></script>
+
+    <!-- Load Leaflet: http://leafletjs.com/ -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+
+    <!-- Load Leaflet Basemap Providers: https://github.com/leaflet-extras/leaflet-providers -->
+    <!-- Modified to include USGS TNM web services -->
+    <script src="JS/leaflet-providers.js"></script>
+<!-- lecture excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <!-- Load Font Awesome icons -->
+    <script src="https://use.fontawesome.com/a64989e3a8.js"></script>
+
+    <!-- Grouped Layer Plugin: https://github.com/ismyrnow/leaflet-groupedlayercontrol  -->
+    <link rel="stylesheet" href="CSS/leaflet.groupedlayercontrol.min.css">
+    <script src="JS/leaflet.groupedlayercontrol.min.js" type="text/javascript"></script>
+
+    <!-- Overview mini map Plugin: https://github.com/Norkart/Leaflet-MiniMap -->
+    <link rel="stylesheet" href="CSS/Control.MiniMap.css">
+    <script src="JS/Control.MiniMap.min.js" type="text/javascript"></script>
+
+    <!-- Leaflet Drawing Plugin: https://github.com/codeofsumit/leaflet.pm -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.pm@latest/dist/leaflet.pm.css">
+    <script src="https://unpkg.com/leaflet.pm@latest/dist/leaflet.pm.min.js"></script>
+
+    <!-- Leaflet WMS Plugin: https://github.com/heigeo/leaflet.wms -->
+    <script src="JS/leaflet.wms.js"></script>
+
+    <!-- Logo Credit Plugin: https://github.com/gregallensworth/L.Control.Credits -->
+    <link rel="stylesheet" href="CSS/leaflet-control-credits.css" />
+    <script type="text/javascript" src="JS/leaflet-control-credits.js"></script>
+    <script src="interactions/leaflet.browser.print-master/dist/leaflet.browser.print.js"></script>
+    <link
+      rel="stylesheet"
+      href="interactions/Leaflet-Coordinates-Control-master/Control.Coordinates.css"
+    />
+    <script src="interactions/Leaflet-Coordinates-Control-master/Control.Coordinates.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="interactions/leaflet-search-master/src/leaflet-search.css"
+    />
+    <script src="interactions/leaflet-search-master/src/leaflet-search.js"></script>
+
+
+    <!-- Load google map layer-->
+    <script src="'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'"></script>
+
+    <!-- Path of layers -->
+    <script src="JS/DA_NADOR.js" type="text/javascript"></script>
+	<script src="JS/DA_DRIOUCH.js" type="text/javascript"></script>
+    <script src="JS/DA_Guercif.js" type="text/javascript"></script>
+    <script src="JS/Limite Marchika.js" type="text/javascript"></script> 
+    <script src="JS/PA.js" type="text/javascript"></script>
+	<script src="JS/PDAR.js" type="text/javascript"></script>
+    <script src="JS/PR_approuvés.js" type="text/javascript"></script>
+	<script src="JS/limite PR en cours d'etude.js" type="text/javascript"></script>
+    <script src="JS/DD.js" type="text/javascript"></script>
+    <script src="JS/DPM.js" type="text/javascript"></script>
+    <script src="JS/SDAU NADOR.js" type="text/javascript"></script>
+    <script src="JS/SDAU KERT.js" type="text/javascript"></script>
+    <script src="JS/PA-PDAR-ENCOURS.js" type="text/javascript"></script>
+    <script src="JS/SIBE.js" type="text/javascript"></script>
+    <script src="JS/ZONE_FRANCHE.js" type="text/javascript"></script>
+    <script src="JS/ZONE_DEVELOPPEMENT.js" type="text/javascript"></script>
+    <script src="JS/PI.js" type="text/javascript"></script>
+    <script src="JS/CHEMIN DE FER.js" type="text/javascript"></script>
+    <script src="JS/AUTOROUTE.js" type="text/javascript"></script>
+    <script src="JS/portuaire.js" type="text/javascript"></script>
+    <script src="JS/ligne_electrique.js" type="text/javascript"></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body,
+        #map {
+            height: 100%;
+        }
+.wrap {
+    background-color: #333; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    text-align: center; /* Centrer le texte */
+    padding: 20px; /* Espacement intérieur */
+    font-size: 14px; /* Taille du texte */
+}
+
+#toggle-import {
+            position: absolute;
+            top: 10px;
+            left: 50px;
+            padding: 20px 30px;
+            background: rgb(209, 205, 167);
+            color: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+ #import-panel {
+            position: absolute;
+            top: 130px;
+            left: 50px;
+            width: 400px;
+            background: rgb(214, 228, 202);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            max-height: 80vh;
+            overflow-y: auto;
+}
+.coordinate-info {
+            background-color: #e9f7ef;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        .file-upload {
+            margin: 10px 0;
+            padding: 15px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .file-upload:hover {
+            border-color: #4CAF50;
+        }
+        .file-upload i {
+            font-size: 24px;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+        .manual-entry {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .coord-inputs {
+            display: flex;
+            gap: 10px;
+        }
+        .coord-inputs input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .actions button {
+            flex: 1;
+            padding: 8px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .actions button.secondary {
+            background-color: #f0ad4e;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .no-data {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+        }  
+    
+        #coordinate-input {
+            position: absolute;
+            top: 20px;
+            left: 300px;
+            background: rgb(209, 205, 167);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }   
+        h3 {
+            background-color: powderblue;
+            font-family: courier;
+            color: blue;
+            text-align:center;
+} 
+    </style>
+
+</head>
+
+<body>
+    
+    <div id="coordinate-input">
+        <label for="x">X (m) :</label>
+        <input type="number" id="x" name="x" step="any" required>
+        <br>
+        <label for="y">Y (m) :</label>
+        <input type="number" id="y" name="y" step="any" required>
+        <br><br>
+        <button onclick="afficherPoint()">Afficher</button>
+    </div>
+
+    <div id="map"></div>
+   
+    <button id="toggle-import">Importaion Des Cordonnées</button>
+    
+    <div id="import-panel"> 
+
+        <div class="file-upload" id="file-upload-area">
+            <i class="fas fa-file-upload"></i>
+            <p>Glissez-déposez ou cliquez pour importer</p>
+            <p>Formats supportés: CSV, TXT</p>
+            <input type="file" id="file-input" accept=".xlsx,.csv,.txt" style="display: none;">
+        </div>
+        
+        <div class="section-title">Saisie manuelle</div>
+        <div class="manual-entry">
+            <div class="coord-inputs">
+                <input type="number" id="coord-x" placeholder="Coordonnée X (Est)" step="0.0001">
+                <input type="number" id="coord-y" placeholder="Coordonnée Y (Nord)" step="0.0001">
+            </div>
+            <div class="actions">
+                <button id="add-point" class="secondary"><i class="fas fa-plus"></i> Ajouter</button>
+                <button id="reset-points" class="secondary"><i class="fas fa-trash"></i> Réinitialiser</button>
+            </div>
+        </div>
+        
+        <div class="section-title">Liste des Points</div>
+        <table id="point-table">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>X (Est)</th>
+                    <th>Y (Nord)</th>
+                    <th>Lat/Lon</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="no-data">Aucun point saisi</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <button id="show-button" style="width: 100%; margin-top: 10px; padding: 10px;">
+            <i class="fas fa-map-marked-alt"></i> Afficher sur la carte
+        </button>
+    </div>
+
+    
+    <script>
+        var map = L.map('map', {
+            center: [35.090136, -2.974548], 
+            zoom: 10
+        });
+
+   // Define Base Maps
+
+        var Google_Map = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+         maxZoom: 50,
+         subdomains:['mt0','mt1','mt2','mt3']
+        });
+
+        var baseLayers = {
+            'Google Map': Google_Map,
+            'ESRI Imagery': L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+    maxZoom: 19,
+    subdomains:['mt0','mt1','mt2','mt3']
+}).addTo(map),
+            'Topo Map': L.tileLayer.provider('OpenTopoMap',{
+              maxZoom:15})
+        };
+// Gestion du bouton Import
+const toggleBtn = document.getElementById('toggle-import');
+        const importPanel = document.getElementById('import-panel');
+        
+        toggleBtn.addEventListener('click', function() {
+            importPanel.style.display = importPanel.style.display === 'none' ? 'block' : 'none';
+            toggleBtn.textContent = importPanel.style.display === 'none' ? 'Importaion Des Cordonnées' : 'Fermer';
+            
+            // Initialiser les fonctionnalités EPSG:26191 si ce n'est pas déjà fait
+            if (!window.epsgInitialized && importPanel.style.display === 'block') {
+                initEPSG26191();
+                window.epsgInitialized = true;
+            }
+        });
+
+        // Initialisation des fonctionnalités EPSG:26191
+        function initEPSG26191() {
+            // Définition de la projection EPSG:26191
+            proj4.defs("EPSG:26191", 
+                "+proj=lcc +lat_1=33.3 +lat_0=33.3 +lon_0=-5.4 +k_0=0.999625769 +x_0=500000 +y_0=300000 +ellps=clrk80ign +towgs84=31,146,47,0,0,0,0 +units=m +no_defs");
+
+
+            let currentPoints = [];
+            let currentMarkers = [];
+            let currentPolygons = [];
+
+            // Éléments du DOM
+            const fileInput = document.getElementById('file-input');
+            const fileUploadArea = document.getElementById('file-upload-area');
+            const pointTable = document.getElementById('point-table').getElementsByTagName('tbody')[0];
+            const showButton = document.getElementById('show-button');
+            const coordX = document.getElementById('coord-x');
+            const coordY = document.getElementById('coord-y');
+            const addPointButton = document.getElementById('add-point');
+            const resetButton = document.getElementById('reset-points');
+
+            // Fonction de conversion des coordonnées
+            function convertToWGS84(x, y) {
+                try {
+                    const converted = proj4("EPSG:26191", "EPSG:4326", [x, y]);
+                    return {
+                        lat: converted[1],
+                        lng: converted[0],
+                        str: converted[1].toFixed(6) + " / " + converted[0].toFixed(6)
+                    };
+                } catch (e) {
+                    console.error("Erreur de conversion:", e);
+                    return null;
+                }
+            }
+
+            // Afficher les points sur la carte
+            function displayOnMap() {
+                // Nettoyer la carte
+                currentMarkers.forEach(m => map.removeLayer(m));
+                currentPolygons.forEach(p => map.removeLayer(p));
+                currentMarkers = [];
+                currentPolygons = [];
+
+                if (currentPoints.length === 0) return;
+
+                const points = [];
+                currentPoints.forEach(point => {
+                    const wgs84 = convertToWGS84(point.x, point.y);
+                    if (!wgs84) return;
+                    
+                    points.push([wgs84.lat, wgs84.lng]);
+                    
+                    const marker = L.marker([wgs84.lat, wgs84.lng]).addTo(map)
+                        .bindPopup(`X: ${point.x.toFixed(2)}<br>Y: ${point.y.toFixed(2)}`);
+                    currentMarkers.push(marker);
+                });
+
+                if (points.length >= 3) {
+                    const polygon = L.polygon(points, {color: 'blue'}).addTo(map);
+                    currentPolygons.push(polygon);
+                }
+
+                if (currentMarkers.length > 0) {
+                    map.fitBounds(L.featureGroup(currentMarkers).getBounds().pad(0.2));
+                }
+            }
+
+            // Mettre à jour le tableau
+            function updateTable() {
+                pointTable.innerHTML = '';
+                
+                currentPoints.forEach((point, index) => {
+                    const wgs84 = convertToWGS84(point.x, point.y);
+                    const row = pointTable.insertRow();
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${point.x.toFixed(2)}</td>
+                        <td>${point.y.toFixed(2)}</td>
+                        <td>${wgs84 ? wgs84.str : 'N/A'}</td>
+                        <td><button class="remove-point">Supprimer</button></td>
+                    `;
+                    
+                    row.querySelector('.remove-point').addEventListener('click', () => {
+                        currentPoints.splice(index, 1);
+                        updateTable();
+                        displayOnMap();
+                    });
+                });
+                
+                if (currentPoints.length === 0) {
+                    pointTable.innerHTML = '<tr><td colspan="5" class="no-data">Aucun point saisi</td></tr>';
+                }
+            }
+
+            // Événements
+            addPointButton.addEventListener('click', () => {
+                const x = parseFloat(coordX.value);
+                const y = parseFloat(coordY.value);
+                
+                if (!isNaN(x) && !isNaN(y)) {
+                    currentPoints.push({x, y});
+                    updateTable();
+                    displayOnMap();
+                    coordX.value = '';
+                    coordY.value = '';
+                } else {
+                    alert("Coordonnées invalides");
+                }
+            });
+
+            resetButton.addEventListener('click', () => {
+                currentPoints = [];
+                updateTable();
+                displayOnMap();
+            });
+
+            showButton.addEventListener('click', displayOnMap);
+
+            // Gestion des fichiers
+            fileUploadArea.addEventListener('click', () => fileInput.click());
+            
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    
+                    if (file.name.endsWith('.csv') || file.name.endsWith('.txt')) {
+                        Papa.parse(content, {
+                            header: false,
+                            complete: function(results) {
+                                currentPoints = results.data
+                                    .filter(row => row.length >= 2)
+                                    .map(row => ({x: parseFloat(row[0]), y: parseFloat(row[1])}))
+                                    .filter(p => !isNaN(p.x) && !isNaN(p.y));
+                                updateTable();
+                                displayOnMap();
+                            }
+                        });
+                    } else if (file.name.endsWith('.xlsx')) {
+                        const workbook = XLSX.read(content, {type: 'binary'});
+                        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                        const data = XLSX.utils.sheet_to_json(sheet, {header: 1});
+                        
+                        currentPoints = data
+                            .filter(row => row.length >= 2)
+                            .map(row => ({x: parseFloat(row[0]), y: parseFloat(row[1])}))
+                            .filter(p => !isNaN(p.x) && !isNaN(p.y));
+                        updateTable();
+                        displayOnMap();
+                    }
+                };
+                
+                if (file.name.endsWith('.xlsx')) {
+                    reader.readAsBinaryString(file);
+                } else {
+                    reader.readAsText(file);
+                }
+            });
+        }
+   // Define a feature style for each layer 
+        
+        function stylisermonFeature1(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			dashArray: '3',
+			fillOpacity: 0.3,
+			fillColor: 'green'
+		};
+	    }
+	
+	    function stylisermonFeature2(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			dashArray: '3',
+			fillOpacity: 0.3,
+			fillColor: 'Orange'
+		};
+	    }
+	
+	    function stylisermonFeature3(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			dashArray: '3',
+			fillOpacity: 0.3,
+			fillColor: 'purple'
+		};
+	    }
+	
+        function stylisermonFeature4(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: 'red',
+			dashArray: '3',
+			fillOpacity: 0.5,
+			fillColor: 'red'
+		};
+	    }
+    
+        function stylisermonFeature5(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: '#FF8484',
+			dashArray: '3',
+			fillOpacity: 0.5,
+			fillColor: '#FF8484'
+		};
+	    }
+	
+	    function stylisermonFeature6(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: '#84C318',
+			dashArray: '3',
+			fillOpacity: 0.5,
+			fillColor: '#84C318'
+		};
+	    }
+	
+        function stylisermonFeature7(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: 'Yellow',
+			dashArray: '3',
+			fillOpacity: 0.5,
+			fillColor: 'Yellow'
+		};
+	    }
+        function stylisermonFeature8(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: '#3EFF8B',
+			dashArray: '3',
+			fillOpacity: 0.5,
+			fillColor: '#3EFF8B'
+		};
+	    }
+        function stylisermonFeature9(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: 'Blue',
+			dashArray: '3',
+			fillOpacity: 0.5,
+			fillColor: 'Blue'
+		};
+	    }
+       
+        function stylisermonFeature12(feature) {
+		return {
+			weight: 5,
+			opacity: 1,
+			color: '#E4C3AD',
+			dashArray: '0',
+			fillOpacity: 0.9,
+			fillColor: '#E4C3AD'
+		};
+	    }  
+        function stylisermonFeature13(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: '#764248',
+			dashArray: '3',
+			fillOpacity: 0.7,
+			fillColor: '#764248'
+		};
+	    }
+        function stylisermonFeature14(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: '#FF6347',
+			dashArray: '3',
+			fillOpacity: 0.7,
+			fillColor: '#FF6347'
+		};
+	    }       
+        function stylisermonFeature25(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: '#2c969a',
+			dashArray: '3',
+			fillOpacity: 0.7,
+			fillColor: '#2c969a'
+		};
+	    } 
+        function stylisermonFeature26(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			dashArray: '3',
+			fillOpacity: 0.8,
+			fillColor: '#ac93e2'
+		};
+	    }
+        function stylisermonFeature27(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			dashArray: '3',
+			fillOpacity: 0.5,
+			fillColor: '#DAF7A6 '
+		};
+	    }
+        function stylisermonFeature28(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			dashArray: '3',
+			fillOpacity: 0.5,
+			fillColor: '#900C3F'
+		};
+	    }
+        function stylisermonFeature29(feature) {
+		return {
+			weight: 1,
+			opacity: 1,
+            color: '#2c969a',
+			dashArray: '3',
+			
+			
+		};
+	    }
+        function stylisermonFeature30(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: 'red',
+			dashArray: '3',
+			fillOpacity: 0.5,
+			fillColor: 'red'
+		};
+	    }
+        function stylisermonFeature31(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: 'red',
+			dashArray: '3',
+			fillOpacity: 0.5,
+			fillColor: 'red'
+		};
+	    }
+        function stylisermonFeature34(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: '#52a5be',
+			dashArray: '3',
+			
+		};
+	    }
+         function stylisermonFeature35(feature) {
+		return {
+			weight: 3,
+			opacity: 1,
+			color: '#52a5be',
+			dashArray: '3',
+			
+		};
+	    }
+        
+    // For each layer, associate a specific Feature style
+
+   
+	
+	a1 = L.geoJSON(DA_NADOR, {
+	style: stylisermonFeature1,
+	});
+	a2 = L.geoJSON(DA_DRIOUCH, {
+	style: stylisermonFeature2,
+	});
+    a3 = L.geoJSON(DA_Guercif, {
+	style: stylisermonFeature3,
+	});
+    a4 = L.geoJSON(limite_marchika ,{
+	style: stylisermonFeature4,
+	});
+	a5 = L.geoJSON(PA, {
+	style: stylisermonFeature5,
+	});
+	a6 = L.geoJSON(PDAR, {
+	style: stylisermonFeature6,
+	});
+    a7 = L.geoJSON(PR_approuvés, {
+	style: stylisermonFeature7,
+	});
+    a8 = L.geoJSON(PR_Encours, {
+	style: stylisermonFeature8,
+	});
+    a9 = L.geoJSON(DD_NDG, {
+	style: stylisermonFeature9,
+	});
+    
+    a12 = L.geoJSON(DPM, {
+	style: stylisermonFeature12,
+	});
+    a13 = L.geoJSON(sdau_nador, {
+	style: stylisermonFeature13,
+	});
+    a14 = L.geoJSON(sdau_kert, {
+	style: stylisermonFeature14,
+	});
+    
+    a25 = L.geoJSON(PA_PDAR_en_cours_étude, {
+	style: stylisermonFeature25,
+	});
+    a26 = L.geoJSON(SIBE, {
+	style: stylisermonFeature26,
+	});
+    a27 = L.geoJSON(ZONE_FRANCHE, {
+	style: stylisermonFeature27,
+	});
+    a28 = L.geoJSON(ZONE_DEVELOPPEMENT, {
+	style: stylisermonFeature28,
+	});
+    a29 = L.geoJSON(PI, {
+	style: stylisermonFeature29,
+	});
+    a30 = L.geoJSON(CF, {
+	style: stylisermonFeature30,
+	});
+    a31 = L.geoJSON(Autoroute, {
+	style: stylisermonFeature31,
+	});
+    a34 = L.geoJSON(portuaire, {
+	style: stylisermonFeature34,
+	});
+    a35 = L.geoJSON(ligne_electrique, {
+	style: stylisermonFeature34,
+	});
+  
+  
+        //Overlay grouped layers    
+        var groupOverLays = {      
+            "<h3>DÉCOUPAGE ADMINISTRATIF</h3>": {
+                "Nador": a1,
+                "Driouch": a2,
+                "Guercif": a3 },
+            "<h3>PA-PDAR</h3>": {
+                "Limite Pa": a5,
+                "Limite Pdar": a6,
+                "Pa-Pdar_En Cours D'étude": a25,
+                },
+            "<h3>REDRESSEMENT</h3>": {
+                "Plans De Restructuration Approuvés": a7,
+                "Plans De Restructuration En Cours D'étude": a8},               
+            "<h3>AUTRE</h3>": {
+                "Limite Marchika": a4,
+                "Douars Délimités": a9,
+                "DPM_100m_1km": a12,               
+                "Sdau Nador": a13,
+                "Sdau Kert": a14,
+                "SIBE ": a26,               
+                "Zone Franche": a27,
+                "Zone De Developpement": a28,
+                "Périmetre Irrigué": a29,
+                "Chemin De Fer ": a30,
+                "Tracé Autoroute": a31,
+                "Domaine Portuaire": a34,
+                "Ligne Electrique": a35
+
+            },
+
+        };     
+        //add layer switch control
+        L.control.groupedLayers(baseLayers, groupOverLays).addTo(map);
+        //add scale bar to map
+        L.control.scale({
+            position: 'bottomleft'
+        }).addTo(map);
+        
+
+        //define Drawing toolbar options
+        var options = {
+            position: 'topleft', // toolbar position, options are 'topleft', 'topright', 'bottomleft', 'bottomright'
+            drawMarker: true, // adds button to draw markers
+            drawPolyline: true, // adds button to draw a polyline
+            drawRectangle: true, // adds button to draw a rectangle
+            drawPolygon: true, // adds button to draw a polygon
+            drawCircle: true, // adds button to draw a cricle
+            cutPolygon: true, // adds button to cut a hole in a polygon
+            editMode: true, // adds button to toggle edit mode for all layers
+            removalMode: true, // adds a button to remove layers
+        };
+
+        // add leaflet.pm controls to the map
+        map.pm.addControls(options);
+
+       
+        var projNordMaroc = '+proj=+proj=lcc +lat_1=33.3 +lat_0=33.3 +lon_0=-5.4 +k_0=0.999625769 +x_0=500000 +y_0=300000 +ellps=clrk80ign +towgs84=31,146,47,0,0,0,0 +units=m +no_defs';
+
+        function afficherPoint() {
+            var x = parseFloat(document.getElementById("x").value);
+            var y = parseFloat(document.getElementById("y").value);
+
+            if (isNaN(x) || isNaN(y)) {
+                alert("Veuillez entrer des coordonnées valides.");
+                return;
+            }
+
+            var pointWGS84 = proj4(projNordMaroc, 'EPSG:4326', [x, y]);
+            var latitude = pointWGS84[1];
+            var longitude = pointWGS84[0];
+
+            // Supprimé la vérification de limite
+            L.marker([latitude, longitude]).addTo(map)
+                .bindPopup("Point converti en WGS84 :<br>Lat: " + latitude.toFixed(6) + "<br>Lon: " + longitude.toFixed(6))
+                .openPopup();
+
+            map.setView([latitude, longitude], 15);
+        }
+    
+        // Affichage des infos popup
+        function onEachFeature(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+        var info = "<b>Nom de la commune:</b> " + props.Nom_commun  + "<br>" +
+                   "<b>Superficie(Ha):</b> " + props.Surf_Ha;
+
+        // Affichage dans une popup (ou dans un élément HTML)
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+
+        // OU : Affichage dans un élément HTML (ex: div avec id="infoDiv")
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+
+// Appliquer cette fonction à ton GeoJSON existant
+a1.eachLayer(function (layer) {
+    onEachFeature(layer.feature, layer);
+});
+a2.eachLayer(function (layer) {
+    onEachFeature(layer.feature, layer);
+});
+ // Affichage des infos popup
+ function DAGUERCIF(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+        var info = "<b>Nom de la commune:</b> " + props.Nom_de_com  + "<br>" +
+                   "<b>Superficie(Ha):</b> " + props.Sup_Ha;
+
+        // Affichage dans une popup (ou dans un élément HTML)
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+
+        // OU : Affichage dans un élément HTML (ex: div avec id="infoDiv")
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+a3.eachLayer(function (layer) {
+    DAGUERCIF(layer.feature, layer);
+});
+
+function afficherInfosMarchika(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+        var info = "<b>Nom:</b> " + props.Layer + "<br>";
+
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+
+a4.eachLayer(function (layer) {
+    afficherInfosMarchika(layer.feature, layer);
+});
+        // Affichage des infos popup
+        function PA_PDAR(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+        var codePlan = props.ID_DU;  // Récupérer le code du plan à partir des propriétés GeoJSON
+        
+        // Définir le lien vers le règlement en fonction du code
+        var documentUrl = "";
+
+        var pdfLinks = {
+            "20": "docs/DU/province nador/PA/20/20.pdf",
+            "21": "docs/DU/province nador/PA/21/21.pdf",
+            "23": "docs/DU/province nador/PA/23/23.pdf",
+            "41": "docs/DU/province nador/PA/41/41.pdf",
+            "50": "docs/DU/province guercif/PA/50/50.pdf",
+            "53": "docs/DU/province nador/PA/53/53.pdf",
+            "59": "docs/DU/province driouch/PA/59/59.pdf",
+            "60": "docs/DU/province nador/PA/60/60.pdf",
+            "61": "docs/DU/province nador/PA/61-62-63/61-62-63.pdf",
+            "62": "docs/DU/province nador/PA/61-62-63/61-62-63.pdf",
+            "63": "docs/DU/province nador/PA/61-62-63/61-62-63.pdf",
+            "64": "docs/DU/province nador/PA/64/64.pdf",
+            "65": "docs/DU/province nador/PA/65/65.pdf",
+            "66": "docs/DU/province driouch/PA/66/66.pdf",
+            "67": "docs/DU/province driouch/PA/67/67.pdf",
+            "68": "docs/DU/province driouch/PA/68/68.pdf",
+            "69": "docs/DU/province nador/PA/69/69.pdf",
+            "70": "docs/DU/province nador/PA/70/70.pdf",
+            "71": "docs/DU/province guercif/PA/71/71.pdf",
+            "72": "docs/DU/province nador/PA/72/72.pdf",
+            "73": "docs/DU/province nador/PA/73/73.pdf",
+            "74": "docs/DU/province nador/PA/74/74.pdf",
+            "75": "docs/DU/province nador/PA/75/75.pdf",
+            "79": "docs/DU/province nador/PA/79/79.pdf",
+            "80": "docs/DU/province driouch/PA/80/80.pdf",
+            "85": "docs/DU/province nador/PA/85/85.pdf",
+            "91": "docs/DU/province driouch/PA/91/91.pdf",
+            "92": "docs/DU/province driouch/PA/92/92.pdf",
+            "93": "docs/DU/province driouch/PA/93/93.pdf",
+            "94": "docs/DU/province driouch/PA/94/94.pdf",
+            "96": "docs/DU/province nador/PA/96/96.pdf",
+            "97": "docs/DU/province driouch/PA/97/97.pdf",
+            "98": "docs/DU/province driouch/PA/98/98.pdf",
+            "99": "docs/DU/province nador/PA/99/99.pdf",
+            "102": "docs/DU/province nador/PA/102-103-104/102-103-104.pdf",
+            "103": "docs/DU/province nador/PA/102-103-104/102-103-104.pdf",
+            "104": "docs/DU/province nador/PA/102-103-104/102-103-104.pdf",
+        "25": "docs/DU/PDAR/25.pdf",
+        "31": "docs/DU/PDAR/31.pdf",
+        "34": "docs/DU/PDAR/34.pdf",
+        "51": "docs/DU/PDAR/51.pdf",
+        "52": "docs/DU/PDAR/52.pdf",
+        "54": "docs/DU/PDAR/54.pdf",
+        "55": "docs/DU/PDAR/55.pdf",
+        "56": "docs/DU/PDAR/56.pdf",
+        "57": "docs/DU/PDAR/57.pdf",
+        "65": "docs/DU/PDAR/65.pdf",
+        "76": "docs/DU/PDAR/76.pdf",
+        "77": "docs/DU/PDAR/77.pdf",
+        "78": "docs/DU/PDAR/78.pdf",
+        "81": "docs/DU/PDAR/81.pdf",
+        "82": "docs/DU/PDAR/82.pdf",
+        "83": "docs/DU/PDAR/83.pdf",
+        "84": "docs/DU/PDAR/84.pdf",
+        "86": "docs/DU/PDAR/86.pdf",
+        "88": "docs/DU/PDAR/88.pdf",
+        "89": "docs/DU/PDAR/89.pdf",
+        "90": "docs/DU/PDAR/90.pdf",
+        "100": "docs/DU/PDAR/100.pdf",
+        "101": "docs/DU/PDAR/101.pdf",
+
+        };
+
+// Définir le lien par défaut si le code n'est pas trouvé
+var documentUrl = pdfLinks[codePlan] || "docs/DU/Vide.pdf";  // Lien par défaut
+
+        // Générer l'information à afficher dans la popup
+        var info = "<b>Nom:</b> " + props.NOM + "<br>" +
+                   "<b>Province:</b> " + props.PROVINCE + "<br>" +
+                   "<b>Commune:</b> " + props.COMMUNE + "<br>" +
+                   "<b>Date D'homologation:</b> " + props.Date_Homol + "<br>" +
+                   "<b>Superficie(m²):</b> " + props.SUPERFICIE;
+
+        // Ajouter le lien vers le règlement dans la popup
+        if (documentUrl) {
+            info += '<br><b>Règlement:</b> <a href="' + documentUrl + '" target="_blank">Voir le règlement</a>';
+        } else {
+            info += '<br><b>Règlement:</b> Non disponible';
+        }
+
+        // Affichage dans une popup
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+
+        // Affichage dans une div HTML
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+
+// Appliquer la fonction à toutes les couches
+a5.eachLayer(function (layer) {
+    PA_PDAR(layer.feature, layer);
+});
+a6.eachLayer(function (layer) {
+    PA_PDAR(layer.feature, layer);
+});
+ // Affichage des infos popup
+ function PA_PDAR_en_cours(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+          var info = "<b>Nom Du Plan :</b> " + props.Layer +"<br>" +
+                   "<b>Surface(m²):</b> " + props.surface+"<br>" +
+                   "<b>Situation:</b> " + props.Situation;
+
+        // Affichage dans une popup (ou dans un élément HTML)
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+
+        // OU : Affichage dans un élément HTML (ex: div avec id="infoDiv")
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+
+a25.eachLayer(function (layer) {
+    PA_PDAR_en_cours(layer.feature, layer);
+});
+// Affichage des infos popup
+function SIBE_ZONEFRANCHE_ZONEDEVELOPPEMENT(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+          var info = "<b>Nature:</b> " + props.Layer +"<br>" +
+                   "<b>Surface(ha):</b> " + props.surface;
+
+        // Affichage dans une popup (ou dans un élément HTML)
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+
+        // OU : Affichage dans un élément HTML (ex: div avec id="infoDiv")
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+
+a26.eachLayer(function (layer) {
+    SIBE_ZONEFRANCHE_ZONEDEVELOPPEMENT(layer.feature, layer);
+});
+a27.eachLayer(function (layer) {
+    SIBE_ZONEFRANCHE_ZONEDEVELOPPEMENT(layer.feature, layer);
+});
+a28.eachLayer(function (layer) {
+    SIBE_ZONEFRANCHE_ZONEDEVELOPPEMENT(layer.feature, layer);
+});
+a29.eachLayer(function (layer) {
+    SIBE_ZONEFRANCHE_ZONEDEVELOPPEMENT(layer.feature, layer);
+});
+a30.eachLayer(function (layer) {
+    SIBE_ZONEFRANCHE_ZONEDEVELOPPEMENT(layer.feature, layer);
+});
+a31.eachLayer(function (layer) {
+    SIBE_ZONEFRANCHE_ZONEDEVELOPPEMENT(layer.feature, layer);
+});
+a34.eachLayer(function (layer) {
+    SIBE_ZONEFRANCHE_ZONEDEVELOPPEMENT(layer.feature, layer);
+});
+a35.eachLayer(function (layer) {
+    SIBE_ZONEFRANCHE_ZONEDEVELOPPEMENT(layer.feature, layer);
+});
+
+        // Affichage des infos popup
+        function PR(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+        var nomCommune = props.Commune;  // Récupérer le nom de la commune
+        // Définir les liens vers les règlements selon le nom de la commune
+        var pdfLinks = {
+            "AL AROUI": "docs/PR/Province NADOR/Al aroui/CC.pdf",
+            "BNI ANSAR": "docs/PR/Province NADOR/Bni Ansar/CC.pdf",
+            "BNI BOUIFROUR": "docs/PR/Province NADOR/Bni Bouifrour/CC.pdf",
+            "BNI CHIKER": "docs/PR/Province NADOR/Bni Chiker/CC.pdf",
+            "BNI OUKIL OULAD M'HAND": "docs/PR/Province NADOR/Bni Oukil Oulad M'hand/CC.pdf",
+            "BNI SIDEL JBEL": "docs/PR/Province NADOR/Bni Sidel Jbel/CC.pdf",
+            "DAR EL KEBDANI": "docs/PR/province DRIOUCH/Driouch/CC.pdf",
+            "DRIOUCH": "docs/PR/province DRIOUCH/Driouch/CC.pdf",
+            "NADOR": "docs/PR/Province NADOR/Nador/CC.pdf",
+            "OULAD SETTOUT": "docs/PR/Province NADOR/Oulad Settout/CC.pdf",
+            "RAS LKSAR": "docs/PR/province GUERCIF/Rass Lksar/CC.pdf",
+            "SELOUANE": "docs/PR/Province NADOR/Selouane/CC.pdf",
+            "TAFERSIT": "docs/PR/province DRIOUCH/Driouch/CC.pdf",
+            "ZEGHENGHENE": "docs/PR/Province NADOR/Zeghanghane/CC.pdf",
+            // Ajoutez ici d'autres communes et leurs liens correspondants
+        };
+        // Définir le lien par défaut si la commune n'est pas trouvée
+        var documentUrl = pdfLinks[nomCommune] || "docs/DU/Vide.pdf"; 
+        var info = "<b>Province:</b> " + props.Province  +
+                   "<br>" +"<b>Commune:</b> " + props.Commune+ "<br>" +
+                   "<b>Nom Du Quartier:</b> " + props.Nom_quarti + "<br>" +
+                   "<b>Situation:</b> " + props.Situation + "<br>" +
+                   "<b>Date D'approbation:</b> " + props.Date_appro + "<br>" +
+                   "<b>Superficie(Ha):</b> " + props.Surf_ha;
+
+// Ajouter le lien vers le règlement dans la popup
+info += '<br><b>Cahier des charges:</b> <a href="' + documentUrl + '" target="_blank">Voir le cahier des charges</a>';
+        // Affichage dans une popup (ou dans un élément HTML)
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+
+        // OU : Affichage dans un élément HTML (ex: div avec id="infoDiv")
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+
+a7.eachLayer(function (layer) {
+    PR(layer.feature, layer);
+});
+        // Affichage des infos popup
+        function PREC(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+          var info = "<b>Province:</b> " + props.Province  +
+                   "<br>" +"<b>Commune:</b> " + props.Commune+ "<br>" +
+                   "<b>Nom Du Quartier:</b> " + props.Nom_quarti + "<br>" +
+                   "<b>Situation:</b> " + props.Situation + "<br>" +
+                   "<b>Date D'approbation:</b> " + props.Date_appro + "<br>" +
+                   "<b>Superficie(Ha):</b> " + props.Surf_ha;
+
+        // Affichage dans une popup (ou dans un élément HTML)
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+
+        // OU : Affichage dans un élément HTML (ex: div avec id="infoDiv")
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+
+a8.eachLayer(function (layer) {
+    PREC(layer.feature, layer);
+});
+// Affichage des infos popup
+function ddndg(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+
+        // Liste des fichiers PDF à afficher sous forme de liens
+        var pdfFiles = [
+            { url:"docs/DD/PV delim Cercle Guercif partie 1 sur 2 (Province Guercif).pdf", name: "Cercle Guercif partie 1 sur 2 (Province Guercif)" },  // PDF 1
+            { url:"docs/DD/PV delim Cercle Guercif partie 2 sur 2 (Province Guercif).pdf", name: "Cercle Guercif partie 2 sur 2 (Province Guercif)" } , // PDF 2
+            { url:"docs/DD/PV delim Cercle Taddart (Province Guercif).pdf", name: "Cercle Taddart (Province Guercif)" },  // PDF 3
+            { url:"docs/DD/PV delim douar Cercle Lkaliaa (Province Nador).pdf", name: "Cercle Lkaliaa (Province Nador)" } ,  // PDF 4
+            { url:"docs/DD/PV delim douar Cercle Louta ((Province Nador).pdf", name: "Cercle Louta (Province Nador)" },   // PDF 5
+            { url:"docs/DD/دائرة الدريوش الجنوبية.pdf", name: "Cercle Driouch Sud" },  // PDF 6
+            { url:"docs/DD/دائرة الدريوش الشمالية.pdf", name: "Cercle Driouch Nord" },  // PDF 7
+            { url:"docs/DD/دائرة الريف الجنوبية.pdf", name: "Cercle Rif Sud" } , // PDF 8
+            { url:"docs/DD/دائرة الريف الشمالية.pdf", name: "Cercle Rif Nord" } , // PDF 9
+           
+        ];
+
+        var info = "<b>Province:</b> " + props.RÉGION +
+                   "<br>" + "<b>Commune:</b> " + props.COMMUNE + "<br>" +
+                   "<b>Cercle:</b> " + props.CERCLE_1 + "<br>" +
+                   "<b>Nom Du Douar:</b> " + props.NOM_DU_DOU + "<br>" +
+                   "<b>Superficie(Ha):</b> " + props.Superficie + "<br>";
+
+        // Affichage des liens PDF dans la popup
+        info += '<br><b>PVs:</b><br>';
+
+        // Construction des liens pour chaque fichier PDF
+        pdfFiles.forEach(function(pdfFile) {
+            info += '<a href="' + pdfFile.url + '" target="_blank">' + pdfFile.name + '</a><br>';
+        });
+
+        // Affichage dans une popup
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+
+        // Affichage dans une div HTML
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+
+// Pour chaque couche de la carte, appelle la fonction `ddndg`
+a9.eachLayer(function (layer) {
+    ddndg(layer.feature, layer);
+});
+
+// Affichage des infos popup
+function DPM_(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+        var info = "<b>Nom:</b> " + props.Nom;
+  
+        // Affichage dans une popup (ou dans un élément HTML)
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+        
+      
+        // OU : Affichage dans un élément HTML (ex: div avec id="infoDiv")
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+a12.eachLayer(function (layer) {
+    DPM_(layer.feature, layer);
+});
+
+// Affichage des infos popup
+function SDAU_nador(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+        
+        var pdfFiles = [
+            { url:"docs/DU/SDAU/1.pdf", name: "SDAU NADOR" },  // PDF 1
+            
+        ];
+
+        ;
+        var info = "<b>Nom:</b> " + props.Nom;
+        // Affichage des liens PDF dans la popup
+        info += '<br><b>Voir le réglement:</b><br>';
+
+        // Construction des liens pour chaque fichier PDF
+        pdfFiles.forEach(function(pdfFile) {
+            info += '<a href="' + pdfFile.url + '" target="_blank">' + pdfFile.name + '</a><br>';
+        });
+
+        
+
+        // Affichage dans une popup (ou dans un élément HTML)
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+        
+      
+        // OU : Affichage dans un élément HTML (ex: div avec id="infoDiv")
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+a13.eachLayer(function (layer) {
+    SDAU_nador(layer.feature, layer);
+});
+
+// Affichage des infos popup
+function SDAU_kert(feature, layer) {
+    layer.on('click', function (e) {
+        var props = feature.properties;
+        
+        var pdfFiles = [
+            { url:"docs/DU/SDAU/2.pdf", name: "SDAU KERT" },  // PDF 1
+            
+        ];
+
+        ;
+        var info = "<b>Nom:</b> " + props.Nom;
+        // Affichage des liens PDF dans la popup
+        info += '<br><b>Voir le réglement:</b><br>';
+
+        // Construction des liens pour chaque fichier PDF
+        pdfFiles.forEach(function(pdfFile) {
+            info += '<a href="' + pdfFile.url + '" target="_blank">' + pdfFile.name + '</a><br>';
+        });
+
+        
+
+        // Affichage dans une popup (ou dans un élément HTML)
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(info)
+            .openOn(map);
+        
+      
+        // OU : Affichage dans un élément HTML (ex: div avec id="infoDiv")
+        document.getElementById("infoDiv").innerHTML = info;
+    });
+}
+
+a14.eachLayer(function (layer) {
+    SDAU_kert(layer.feature, layer);
+});
+ // Affichage des infos popup
+
+
+
+// Affichage des infos popup
+
+L.control.browserPrint().addTo(map);
+function formatJSON(rawjson) {
+                //callback that remap fields name
+                var json = {},
+                  key,
+                  loc,
+                  disp = [];
+                for (var i in rawjson) {
+                  disp = rawjson[i].display_name.split(",");
+                  key = disp[0] + ", " + disp[1];
+                  loc = L.latLng(rawjson[i].lat, rawjson[i].lon);
+                  json[key] = loc; //key,value format
+                }
+                return json;
+              }
+              var searchOpts = {
+                url: "http://nominatim.openstreetmap.org/search?format=json&q={s}",
+                jsonpParam: "json_callback",
+                formatData: formatJSON,
+                zoom: 10,
+                minLength: 2,
+                autoType: false,
+                marker: {
+                  icon: false,
+                  animate: false,
+                },
+              };
+
+              map.addControl( new L.Control.Search(searchOpts) );
+
+              var mapId = document.getElementById("map");
+              var coord = new L.Control.Coordinates();
+              coord.addTo(map);
+
+              function onMapClick(e) {
+                coord.setCoordinates(e);
+              }
+
+              map.on("click", onMapClick);
+
+              var layers = [];
+              for (var providerId in providers) {
+                layers.push(providers[providerId]);
+              }
+
+              L.control.iconLayers(layers, {
+				position: 'topright'
+			}).addTo(map);
+    
+    </script>
+    <!-- Footer -->
+    <footer class="wrap">
+        <div class="grid grid-pad" >
+            <div class="col-1-4">
+                <div class="content">
+                    <div class="footer-widget">
+                      
+                        <div class="textwidget">
+                            <p>Le présent géoportail vise à représenter des données urbanistiques pour l'Agence Urbaine de Nador-Driouch-Guercif.</p>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="social-footer">
+            <div class="grid grid-pad">
+                <div class="col-1-1" >
+                    <div class="content">
+                        <p class="source-org copyright">© 2025 | TOUFIK OUMAYMA <a href="http://templatestock.co"></a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+     <!-- End Footer -->
+     <div class="loader-overlay">
+        <div class="loader">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>

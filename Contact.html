@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Géoportail</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img\icon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" /> <!-- https://fonts.google.com/ -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
+    <link href="fontawesome/css/all.min.css" rel="stylesheet" /> <!-- https://fontawesome.com/ -->
+    <link href="css/templatemo-diagoona.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="tm-container">        
+        <div>
+            <div class="tm-row pt-4">
+                <div class="tm-col-left">
+                    <div class="tm-site-header media">
+                        <img src="img\logo.png" width="200" height="50" alt="Image">
+                        <div class="media-body">
+                            <h1 class="tm-sitename text-uppercase">Géoportail</h1>
+                        </div>        
+                    </div>
+                </div>
+                <div class="tm-col-right">
+                    <nav class="navbar navbar-expand-lg" id="tm-main-nav">
+                        <button class="navbar-toggler toggler-example mr-0 ml-auto" type="button" 
+                            data-toggle="collapse" data-target="#navbar-nav" 
+                            aria-controls="navbar-nav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span><i class="fas fa-bars"></i></span>
+                        </button>
+                        <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
+                            <ul class="navbar-nav text-uppercase">
+                                <li class="nav-item">
+                                    <a class="nav-link tm-nav-link" href="Géoportail.html">Accueil <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link tm-nav-link" href="Domaines D'intervention.html">Domaines D'intervention</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link tm-nav-link" href="E-Services.html">E-Services</a>
+                                </li>                            
+                                <li class="nav-item active">
+                                    <a class="nav-link tm-nav-link" href="Contact.html">Contact</a>
+                                </li>
+                            </ul>                            
+                        </div>                        
+                    </nav>
+                </div>
+            </div>
+            <!-- Contact-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="btn btn-primary">Nous contacter</h2>
+                    
+                    
+                </div>
+                <!-- * * * * * * * * * * * * * * *-->
+                <!-- * * SB Forms Contact Form * *-->
+                <!-- * * * * * * * * * * * * * * *-->
+                <!-- This form is pre-integrated with SB Forms.-->
+                <!-- To make this form functional, sign up at-->
+                <!-- https://startbootstrap.com/solution/contact-forms-->
+                <!-- to get an API token!-->
+                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                    <div class="row align-items-stretch mb-5">
+                        <div class="col-md-6">
+                           
+                            <div class="form-group">
+                                <!-- Name input-->
+                                <input class="form-control" id="Nom" type="text" placeholder="Nom *" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="name:required">Entrez votre nom</div>
+                        </div>
+                        
+                            <div class="form-group">
+                                <!-- Email address input-->
+                                <input class="form-control" id="email" type="email" placeholder="Email *" data-sb-validations="required,email" />
+                                <div class="invalid-feedback" data-sb-feedback="email:required">Entrez votre email</div>
+                                <div class="invalid-feedback" data-sb-feedback="email:email">Email invalide</div>
+                            </div>
+                            <div class="form-group mb-md-0">
+                                <!-- Phone number input-->
+                                <input class="form-control" id="phone" type="tel" placeholder="Téléphone *" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="phone:required">Entrez votre numéro de téléphone</div>
+                            </div>
+                            
+                        
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-textarea mb-md-0">
+                                <!-- Message input-->
+                                <textarea class="form-control" id="message" placeholder="Votre Message *" data-sb-validations="required"></textarea>
+                                <div class="invalid-feedback" data-sb-feedback="message:required">Rédigez votre message</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Submit success message-->
+                    <!---->
+                    <!-- This is what your users will see when the form-->
+                    <!-- has successfully submitted-->
+                    <div class="d-none" id="submitSuccessMessage">
+                        <div class="text-center text-white mb-3">
+                            <div class="fw-bolder">Votre message est successivement soumis !</div>
+                        </div>
+                    </div>
+                    <!-- Submit error message-->
+                    <!---->
+                    <!-- This is what your users will see when there is-->
+                    <!-- an error submitting the form-->
+                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Erreur lors de l'envoi de votre message !</div></div>
+                    <!-- Submit Button-->
+                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="Soumettre">Soumettre message</button></div>
+                </form>
+            </div>
+        </section>
+                </main>
+            </div>
+        </div>        
+
+        <div class="tm-row">
+            <div class="tm-col-left text-center">            
+                <ul class="tm-bg-controls-wrapper">
+                    <li class="tm-bg-control active" data-id="0"></li>
+                    <li class="tm-bg-control" data-id="1"></li>
+                    <li class="tm-bg-control" data-id="2"></li>
+                </ul>            
+            </div>        
+        </div>
+
+        <div class="tm-bg"> <!-- Diagonal background design -->
+            <div class="tm-bg-left"></div>
+            <div class="tm-bg-right"></div>
+        </div>
+    </div>
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.backstretch.min.js"></script>
+    <script src="js/templatemo-script.js"></script>
+   
+</body>
+</html>
