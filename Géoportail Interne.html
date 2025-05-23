@@ -921,43 +921,43 @@ a4.eachLayer(function (layer) {
         var documentUrl = "";
 
         var pdfLinks = {
-            "20": "20.pdf",
-            "21": "21.pdf",
-            "23": "23.pdf",
-            "41": "41.pdf",
+            "20": "20/20.pdf",
+            "21": "21/21.pdf",
+            "23": "23/23.pdf",
+            "41": "41/41.pdf",
             "50": "50.pdf",
-            "53": "53.pdf",
+            "53": "53/53.pdf",
             "59": "59.pdf",
-            "60": "60.pdf",
-            "61": "61-62-63.pdf",
-            "62": "61-62-63.pdf",
-            "63": "61-62-63.pdf",
-            "64": "64.pdf",
+            "60": "60/60.pdf",
+            "61": "61-62-63/61-62-63.pdf",
+            "62": "61-62-63/61-62-63.pdf",
+            "63": "61-62-63/61-62-63.pdf",
+            "64": "64/64.pdf",
             "65": "65.pdf",
             "66": "66.pdf",
             "67": "67.pdf",
             "68": "68.pdf",
-            "69": "69.pdf",
-            "70": "70.pdf",
+            "69": "69/69.pdf",
+            "70": "70/70.pdf",
             "71": "71.pdf",
-            "72": "72.pdf",
-            "73": "73.pdf",
-            "74": "74.pdf",
-            "75": "75.pdf",
-            "79": "79.pdf",
+            "72": "72/72.pdf",
+            "73": "73/73.pdf",
+            "74": "74/74.pdf",
+            "75": "75/75.pdf",
+            "79": "79/79.pdf",
             "80": "80.pdf",
-            "85": "85.pdf",
+            "85": "85/85.pdf",
             "91": "91.pdf",
             "92": "92.pdf",
             "93": "93.pdf",
             "94": "94.pdf",
-            "96": "96.pdf",
+            "96": "96/96.pdf",
             "97": "97.pdf",
             "98": "98.pdf",
-            "99": "99.pdf",
-            "102": "102-103-104.pdf",
-            "103": "102-103-104.pdf",
-            "104": "102-103-104.pdf",
+            "99": "99/99.pdf",
+            "102": "102-103-104/102-103-104.pdf",
+            "103": "102-103-104/102-103-104.pdf",
+            "104": "102-103-104/102-103-104.pdf",
         "25": "25.pdf",
         "31": "31.pdf",
         "34": "34.pdf",
@@ -985,7 +985,7 @@ a4.eachLayer(function (layer) {
         };
 
 // Définir le lien par défaut si le code n'est pas trouvé
-var documentUrl = pdfLinks[codePlan] || "docs/DU/Vide.pdf";  // Lien par défaut
+var documentUrl = pdfLinks[codePlan] || "Vide.pdf";  // Lien par défaut
 
         // Générer l'information à afficher dans la popup
         var info = "<b>Nom:</b> " + props.NOM + "<br>" +
@@ -1108,7 +1108,7 @@ a35.eachLayer(function (layer) {
             // Ajoutez ici d'autres communes et leurs liens correspondants
         };
         // Définir le lien par défaut si la commune n'est pas trouvée
-        var documentUrl = pdfLinks[nomCommune] || "docs/DU/Vide.pdf"; 
+        var documentUrl = pdfLinks[nomCommune] || "Vide.pdf"; 
         var info = "<b>Province:</b> " + props.Province  +
                    "<br>" +"<b>Commune:</b> " + props.Commune+ "<br>" +
                    "<b>Nom Du Quartier:</b> " + props.Nom_quarti + "<br>" +
@@ -1233,7 +1233,7 @@ function SDAU_nador(feature, layer) {
         var props = feature.properties;
         
         var pdfFiles = [
-            { url:"docs/DU/SDAU/1.pdf", name: "SDAU NADOR" },  // PDF 1
+            { url:"SDAU/1.pdf", name: "SDAU NADOR" },  // PDF 1
             
         ];
 
@@ -1270,7 +1270,7 @@ function SDAU_kert(feature, layer) {
         var props = feature.properties;
         
         var pdfFiles = [
-            { url:"docs/DU/SDAU/2.pdf", name: "SDAU KERT" },  // PDF 1
+            { url:"SDAU/2.pdf", name: "SDAU KERT" },  // PDF 1
             
         ];
 
