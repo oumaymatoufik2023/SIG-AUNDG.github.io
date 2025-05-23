@@ -1091,20 +1091,20 @@ a35.eachLayer(function (layer) {
         var nomCommune = props.Commune;  // Récupérer le nom de la commune
         // Définir les liens vers les règlements selon le nom de la commune
         var pdfLinks = {
-            "AL AROUI": "docs/PR/Province NADOR/Al aroui/CC.pdf",
-            "BNI ANSAR": "docs/PR/Province NADOR/Bni Ansar/CC.pdf",
-            "BNI BOUIFROUR": "docs/PR/Province NADOR/Bni Bouifrour/CC.pdf",
-            "BNI CHIKER": "docs/PR/Province NADOR/Bni Chiker/CC.pdf",
-            "BNI OUKIL OULAD M'HAND": "docs/PR/Province NADOR/Bni Oukil Oulad M'hand/CC.pdf",
-            "BNI SIDEL JBEL": "docs/PR/Province NADOR/Bni Sidel Jbel/CC.pdf",
-            "DAR EL KEBDANI": "docs/PR/province DRIOUCH/Driouch/CC.pdf",
-            "DRIOUCH": "docs/PR/province DRIOUCH/Driouch/CC.pdf",
-            "NADOR": "docs/PR/Province NADOR/Nador/CC.pdf",
-            "OULAD SETTOUT": "docs/PR/Province NADOR/Oulad Settout/CC.pdf",
-            "RAS LKSAR": "docs/PR/province GUERCIF/Rass Lksar/CC.pdf",
-            "SELOUANE": "docs/PR/Province NADOR/Selouane/CC.pdf",
-            "TAFERSIT": "docs/PR/province DRIOUCH/Driouch/CC.pdf",
-            "ZEGHENGHENE": "docs/PR/Province NADOR/Zeghanghane/CC.pdf",
+            "AL AROUI": "docs2/PR/Province NADOR/Al aroui/CC.pdf",
+            "BNI ANSAR": "docs2/PR/Province NADOR/Bni Ansar/CC.pdf",
+            "BNI BOUIFROUR": "docs2/PR/Province NADOR/Bni Bouifrour/CC.pdf",
+            "BNI CHIKER": "docs2/PR/Province NADOR/Bni Chiker/CC.pdf",
+            "BNI OUKIL OULAD M'HAND": "docs2/PR/Province NADOR/Bni Oukil Oulad M'hand/CC.pdf",
+            "BNI SIDEL JBEL": "docs2/PR/Province NADOR/Bni Sidel Jbel/CC.pdf",
+            "DAR EL KEBDANI": "docs2/PR/province DRIOUCH/Driouch/CC.pdf",
+            "DRIOUCH": "docs2/PR/province DRIOUCH/Driouch/CC.pdf",
+            "NADOR": "docs2/PR/Province NADOR/Nador/CC.pdf",
+            "OULAD SETTOUT": "docs2/PR/Province NADOR/Oulad Settout/CC.pdf",
+            "RAS LKSAR": "docs2/PR/province GUERCIF/Rass Lksar/CC.pdf",
+            "SELOUANE": "docs2/PR/Province NADOR/Selouane/CC.pdf",
+            "TAFERSIT": "docs2/PR/province DRIOUCH/Driouch/CC.pdf",
+            "ZEGHENGHENE": "docs2/PR/Province NADOR/Zeghanghane/CC.pdf",
             // Ajoutez ici d'autres communes et leurs liens correspondants
         };
         // Définir le lien par défaut si la commune n'est pas trouvée
@@ -1164,15 +1164,15 @@ function ddndg(feature, layer) {
 
         // Liste des fichiers PDF à afficher sous forme de liens
         var pdfFiles = [
-            { url:"docs/DD/PV delim Cercle Guercif partie 1 sur 2 (Province Guercif).pdf", name: "Cercle Guercif partie 1 sur 2 (Province Guercif)" },  // PDF 1
-            { url:"docs/DD/PV delim Cercle Guercif partie 2 sur 2 (Province Guercif).pdf", name: "Cercle Guercif partie 2 sur 2 (Province Guercif)" } , // PDF 2
-            { url:"docs/DD/PV delim Cercle Taddart (Province Guercif).pdf", name: "Cercle Taddart (Province Guercif)" },  // PDF 3
-            { url:"docs/DD/PV delim douar Cercle Lkaliaa (Province Nador).pdf", name: "Cercle Lkaliaa (Province Nador)" } ,  // PDF 4
-            { url:"docs/DD/PV delim douar Cercle Louta ((Province Nador).pdf", name: "Cercle Louta (Province Nador)" },   // PDF 5
-            { url:"docs/DD/دائرة الدريوش الجنوبية.pdf", name: "Cercle Driouch Sud" },  // PDF 6
-            { url:"docs/DD/دائرة الدريوش الشمالية.pdf", name: "Cercle Driouch Nord" },  // PDF 7
-            { url:"docs/DD/دائرة الريف الجنوبية.pdf", name: "Cercle Rif Sud" } , // PDF 8
-            { url:"docs/DD/دائرة الريف الشمالية.pdf", name: "Cercle Rif Nord" } , // PDF 9
+            { url:"docs1/DD/PV delim Cercle Guercif partie 1 sur 2 (Province Guercif).pdf", name: "Cercle Guercif partie 1 sur 2 (Province Guercif)" },  // PDF 1
+            { url:"docs1/DD/PV delim Cercle Guercif partie 2 sur 2 (Province Guercif).pdf", name: "Cercle Guercif partie 2 sur 2 (Province Guercif)" } , // PDF 2
+            { url:"docs1/DD/PV delim Cercle Taddart (Province Guercif).pdf", name: "Cercle Taddart (Province Guercif)" },  // PDF 3
+            { url:"docs1/DD/PV delim douar Cercle Lkaliaa (Province Nador).pdf", name: "Cercle Lkaliaa (Province Nador)" } ,  // PDF 4
+            { url:"docs1/DD/PV delim douar Cercle Louta ((Province Nador).pdf", name: "Cercle Louta (Province Nador)" },   // PDF 5
+            { url:"docs1/DD/دائرة الدريوش الجنوبية.pdf", name: "Cercle Driouch Sud" },  // PDF 6
+            { url:"docs1/DD/دائرة الدريوش الشمالية.pdf", name: "Cercle Driouch Nord" },  // PDF 7
+            { url:"docs1/DD/دائرة الريف الجنوبية.pdf", name: "Cercle Rif Sud" } , // PDF 8
+            { url:"docs1/DD/دائرة الريف الشمالية.pdf", name: "Cercle Rif Nord" } , // PDF 9
            
         ];
 
